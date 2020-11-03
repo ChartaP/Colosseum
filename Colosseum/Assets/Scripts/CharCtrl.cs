@@ -46,7 +46,7 @@ public class CharCtrl : MonoBehaviourPun
 
     private void LateUpdate()
     {
-        nameTagTransform.position = transform.position + new Vector3(0, 4f, 0);
+        nameTagTransform.position = transform.position + new Vector3(0, 8f, 0);
     }
 
     private void OnDestroy()

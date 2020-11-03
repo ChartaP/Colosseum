@@ -19,7 +19,6 @@ public class GameMng : MonoBehaviourPunCallbacks
         if(instance == null)
         {
             instance = this;
-            PhotonNetwork.AutomaticallySyncScene = true;
         }
     }
     // Start is called before the first frame update

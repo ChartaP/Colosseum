@@ -49,6 +49,7 @@ public class MultiMng : MonoBehaviourPunCallbacks
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
+
         if(instance == null)
             instance = this;
 
@@ -82,8 +83,6 @@ public class MultiMng : MonoBehaviourPunCallbacks
             PhotonNetwork.LoadLevel(1);
         }
     }
-
-
 
     public override void OnConnectedToMaster()
     {
