@@ -61,3 +61,5 @@ crashlytics-build.properties
 Colosseum/Temp/*
 Colosseum/Packages/*
 Colosseum/Library/*
+Colosseum/obj/*
+Colosseum/Logs/*
