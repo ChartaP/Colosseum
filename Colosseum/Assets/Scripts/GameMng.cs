@@ -16,7 +16,8 @@ public class GameMng : MonoBehaviourPunCallbacks
     public Transform WorldCanvas { get { return worldCanvas; } }
     private void Awake()
     {
-        if(instance == null)
+        DontDestroyOnLoad(gameObject);
+        if (instance == null)
         {
             instance = this;
         }
@@ -88,5 +89,11 @@ public class GameMng : MonoBehaviourPunCallbacks
     public void LeaveRoom()
     {
         PhotonNetwork.LeaveRoom();
+    }
+
+    public void OnApplicationQuit()
+    {
+        PhotonNetwork.LeaveLobby();
+        Destroy(gameObject);
     }
 }

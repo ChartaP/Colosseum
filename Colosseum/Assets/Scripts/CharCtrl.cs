@@ -2,6 +2,7 @@
 using Photon.Pun.UtilityScripts;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +10,8 @@ public class CharCtrl : MonoBehaviourPun
 {
     [SerializeField]
     private CharacterController myCharCtrl = null;
+    [SerializeField]
+    private Animator myAni = null;
     [SerializeField]
     private PhotonView myView = null;
 
@@ -39,9 +42,21 @@ public class CharCtrl : MonoBehaviourPun
             return;
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
+        myAni.SetFloat("ForwardSpeed" , v);
+        myAni.SetFloat("RightSpeed", h);
         Vector3 moveDirection = transform.TransformDirection(new Vector3(h, 0, v));
         moveDirection *= 10f;
         myCharCtrl.Move(moveDirection * Time.deltaTime);
+        if (Input.GetMouseButtonDown(0))
+        {
+            //트리거
+            myAni.SetTrigger("Attack");
+        }
+        if (Input.GetMouseButtonDown(1))
+        {
+            //트리거
+            myAni.SetTrigger("Defend");
+        }
     }
 
     private void LateUpdate()
@@ -51,6 +66,9 @@ public class CharCtrl : MonoBehaviourPun
 
     private void OnDestroy()
     {
-        Destroy(nameTagTransform.gameObject);   
+        if (nameTagTransform != null)
+        {
+            Destroy(nameTagTransform.gameObject);
+        }
     }
 }

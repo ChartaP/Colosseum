@@ -96,6 +96,7 @@ public class MultiMng : MonoBehaviourPunCallbacks
     }
     public void OnApplicationQuit()
     {
+        PhotonNetwork.LeaveRoom();
         Destroy(gameObject);
     }
 
