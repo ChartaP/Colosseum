@@ -9,21 +9,21 @@ public class AniEventHandler : MonoBehaviour
     
     public void AttackStartEventListener()
     {
-
+        ownChar.AttackStart();
     }
 
     public void AttackEndEventListener()
     {
-
+        ownChar.AttackEnd();
     }
 
     public void DefendStartEventListener()
     {
-
+        ownChar.DefendStart();
     }
 
     public void DefendEndEventListener()
     {
-
+        ownChar.DefendEnd();
     }
 }

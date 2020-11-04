@@ -2,7 +2,6 @@
 using Photon.Pun.UtilityScripts;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,6 +20,18 @@ public class CharCtrl : MonoBehaviourPun
     [SerializeField]
     private GameObject NameTag = null;
 
+    [SerializeField]
+    private float fHP = 100f;
+
+    [SerializeField]
+    private bool isDefend = false;
+
+    [SerializeField]
+    private bool isAlive = true;
+
+    [SerializeField]
+    private Attack atk = null;
+
     public void Init()
     {
         gameObject.name = myView.Owner.NickName;
@@ -28,6 +39,7 @@ public class CharCtrl : MonoBehaviourPun
         inst.transform.SetParent(GameMng.instance.WorldCanvas);
         nameTagTransform = inst.transform;
         inst.transform.Find("Text").GetComponent<Text>().text = gameObject.name;
+        myAni.SetFloat("HP", fHP);
     }
 
     void Start()
@@ -38,6 +50,8 @@ public class CharCtrl : MonoBehaviourPun
     // Update is called once per frame
     void Update()
     {
+        if (!isAlive)
+            return;
         if (myView.Owner != PhotonNetwork.LocalPlayer)
             return;
         float h = Input.GetAxis("Horizontal");
@@ -59,8 +73,52 @@ public class CharCtrl : MonoBehaviourPun
         }
     }
 
+    public void AttackStart()
+    {
+        atk.AtkStart();
+    }
+
+    public void AttackEnd()
+    {
+        atk.AtkEnd();
+    }
+
+    public void DefendStart()
+    {
+        isDefend = true;
+    }
+
+    public void DefendEnd()
+    {
+        isDefend = false;
+    }
+
+    public void Hit(float fDamage)
+    {
+        myAni.SetTrigger("Hit");
+        GetDamage(fDamage);
+    }
+
+    private void GetDamage(float fDamage)
+    {
+        if (isDefend)
+            return;
+        fHP -= fDamage;
+        myAni.SetFloat("HP", fHP);
+        if (fHP <= 0)
+            Die();
+    }
+
+    private void Die()
+    {
+        isAlive = false;
+        myAni.SetTrigger("Die");
+    }
+
     private void LateUpdate()
     {
+        if (!isAlive)
+            return;
         nameTagTransform.position = transform.position + new Vector3(0, 8f, 0);
     }
 

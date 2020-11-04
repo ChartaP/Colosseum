@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 5641661054129134640}
   - component: {fileID: 6854134745449878261}
   - component: {fileID: -721289315331519882}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: TestCharacter
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -71,6 +71,10 @@ MonoBehaviour:
   myView: {fileID: 6854134745449878261}
   nameTagTransform: {fileID: 0}
   NameTag: {fileID: 7323982467451259694, guid: 0a14fac51a35ffc4091ccda0da5adb44, type: 3}
+  fHP: 100
+  isDefend: 0
+  isAlive: 1
+  atk: {fileID: 7641671609619820948}
 --- !u!114 &6854134745449878261
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91,6 +95,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: -721289315331519882}
+  - {fileID: 8820111807337590362}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -119,7 +124,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1436421674493013694}
   - component: {fileID: 3208123120450755087}
-  m_Layer: 0
+  - component: {fileID: 7641671609619820948}
+  m_Layer: 8
   m_Name: AttackCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -153,6 +159,34 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 4, y: 4, z: 4}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7641671609619820948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6508445997826792686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d52005fcd6e3904582c680e2a265912, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitList: []
+  ownGameobject: {fileID: 5641661054129134646}
+  fDamage: 50
+--- !u!114 &6205492875539756441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7327519566778934092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca167bf0568720545b45665c59f6d199, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownChar: {fileID: 5641661054129134640}
 --- !u!114 &8820111807337590362
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -194,6 +228,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: footman_Blue_HP
+      objectReference: {fileID: 0}
+    - target: {fileID: 1161219451914649043, guid: 116768ee3d0a6e84d950efb229ac6dbd,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 2406850926467838000, guid: 116768ee3d0a6e84d950efb229ac6dbd,
         type: 3}
