@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/GameIntro.unity
     guid: f65efb7bbc62e3d49b0bcb8da03607d1
   - enabled: 1
+    path: Assets/Scenes/GameLoby.unity
+    guid: 8380d50988db41a4d93587b1456016d6
+  - enabled: 1
     path: Assets/Scenes/Colosseum.unity
     guid: 98912f49375b787468019d8cff0f205f
   - enabled: 1

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
-using Photon.Pun.Demo.Cockpit;
+using UnityEngine.SceneManagement;
 
 public class Room
 {
@@ -26,9 +26,24 @@ public class MultiMng : MonoBehaviourPunCallbacks
     private readonly string defaultName = "Player";
     [Tooltip("wow")]
     [SerializeField]
-    private string gameVersion = "1";
+    private static string gameVersion = "1";
     #endregion
 
+    public static bool isConnected
+    {
+        get
+        {
+            return PhotonNetwork.IsConnected;
+        }
+    }
+
+    public static bool isInRoom
+    {
+        get
+        {
+            return true;
+        }
+    }
 
     public void SetPlayerName(Text text)
     {
@@ -41,32 +56,35 @@ public class MultiMng : MonoBehaviourPunCallbacks
         Debug.Log("닉네임 변경 " + PhotonNetwork.NickName);
     }
 
-    public string GetPlayerName()
+    public static string GetPlayerName()
     {
         return PhotonNetwork.NickName;
     }
 
     private void Awake()
     {
-        DontDestroyOnLoad(gameObject);
-
-        if(instance == null)
+        if (instance == null)
+        {
             instance = this;
+            DontDestroyOnLoad(gameObject);
 
-        PhotonNetwork.AutomaticallySyncScene = true;
+            PhotonNetwork.AutomaticallySyncScene = true;
+
+            PhotonNetwork.NickName = defaultName;
+
+            if (PhotonNetwork.IsConnected)
+            {
+            }
+            else
+            {
+                PhotonNetwork.GameVersion = gameVersion;
+                PhotonNetwork.ConnectUsingSettings();
+            }
+        }
     }
     void Start()
     {
-        PhotonNetwork.NickName = defaultName;
-
-        if (PhotonNetwork.IsConnected)
-        {
-        }
-        else
-        {
-            PhotonNetwork.GameVersion = gameVersion;
-            PhotonNetwork.ConnectUsingSettings();
-        }
+        
     }
 
     // Update is called once per frame
@@ -75,11 +93,11 @@ public class MultiMng : MonoBehaviourPunCallbacks
         
     }
 
-    public void Connect()
+    public void ConnectLoby()
     {
         if (PhotonNetwork.IsConnected)
         {
-            Debug.Log("콜로세움 입장");
+            Debug.Log("로비 입장");
             PhotonNetwork.LoadLevel(1);
         }
     }
@@ -92,12 +110,78 @@ public class MultiMng : MonoBehaviourPunCallbacks
     public override void OnDisconnected(DisconnectCause cause)
     {
         Debug.LogWarningFormat("연결이 끊어짐 이유 : {0}", cause);
-        PhotonNetwork.LoadLevel(0);
+        if(SceneManager.GetActiveScene().buildIndex!=0)
+            PhotonNetwork.LoadLevel(0);
     }
     public void OnApplicationQuit()
     {
         PhotonNetwork.LeaveRoom();
         Destroy(gameObject);
+    }
+
+    public void JoinRoom()
+    {
+        StartCoroutine("JoinRoomTry");
+    }
+
+    private IEnumerator JoinRoomTry()
+    {
+
+        while (true)
+        {
+
+            yield return new WaitForSecondsRealtime(1f);
+            if (PhotonNetwork.IsConnectedAndReady)
+            {
+                JoinRandomRoom();
+            }
+            else
+            {
+                PhotonNetwork.ConnectUsingSettings();
+            }
+            if (PhotonNetwork.InRoom)
+            {
+                break;
+            }
+        }
+        yield return null;
+    }
+
+    public void JoinRandomRoom()
+    {
+        Debug.Log("랜덤 방에 접속 시도");
+        PhotonNetwork.JoinRandomRoom();
+    }
+
+    public override void OnJoinRandomFailed(short returnCode, string message)
+    {
+        Debug.Log("방 접속에 실패 \n새로운 방 생성");
+
+        // #Critical: we failed to join a random room, maybe none exists or they are all full. No worries, we create a new room.
+        PhotonNetwork.CreateRoom(PhotonNetwork.NickName, new RoomOptions { MaxPlayers = 4 });
+    }
+
+    public override void OnCreateRoomFailed(short returnCode, string message)
+    {
+        Debug.Log("방 생성에 실패 ");
+
+        //StartCoroutine("JoinRoomTry");
+    }
+
+    public override void OnJoinedRoom()
+    {
+        Debug.Log("방에 접속됨");
+        //GameObject inst = PhotonNetwork.Instantiate(playerCharacter.name, new Vector3(0f, 0f, 0f), Quaternion.identity, 0);
+    }
+
+    public override void OnLeftRoom()
+    {
+        PhotonNetwork.LoadLevel(0);
+    }
+
+    public void LeaveRoom()
+    {
+        PhotonNetwork.LeaveRoom();
     }
 
 

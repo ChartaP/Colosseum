@@ -32,6 +32,9 @@ public class CharCtrl : MonoBehaviourPun
     [SerializeField]
     private Attack atk = null;
 
+    [SerializeField]
+    private SkinnedMeshRenderer CharMeshRenderer;
+
     public void Init()
     {
         gameObject.name = myView.Owner.NickName;
