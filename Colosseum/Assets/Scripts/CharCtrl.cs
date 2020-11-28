@@ -35,6 +35,8 @@ public class CharCtrl : MonoBehaviourPun
     [SerializeField]
     private SkinnedMeshRenderer CharMeshRenderer;
 
+    public float HP { get { return fHP; } }
+
     public void Init()
     {
         gameObject.name = myView.Owner.NickName;
@@ -42,6 +44,7 @@ public class CharCtrl : MonoBehaviourPun
         inst.transform.SetParent(GameMng.instance.WorldCanvas);
         nameTagTransform = inst.transform;
         inst.transform.Find("Text").GetComponent<Text>().text = gameObject.name;
+        inst.transform.Find("HPBar").GetComponent<HPBar>().target = this;
         myAni.SetFloat("HP", fHP);
         ExitGames.Client.Photon.Hashtable table = myView.Owner.CustomProperties;
         byte num = (byte)table["playerNum"];
