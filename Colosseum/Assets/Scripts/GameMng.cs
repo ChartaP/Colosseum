@@ -24,6 +24,7 @@ public class GameMng : MonoBehaviour
     void Start()
     {
         GameObject inst = PhotonNetwork.Instantiate(playerCharacter.name, new Vector3(0f, 0f, 0f), Quaternion.identity, 0);
+        GameCamera.SetTarget(inst);
     }
 
     // Update is called once per frame

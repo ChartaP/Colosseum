@@ -43,6 +43,24 @@ public class CharCtrl : MonoBehaviourPun
         nameTagTransform = inst.transform;
         inst.transform.Find("Text").GetComponent<Text>().text = gameObject.name;
         myAni.SetFloat("HP", fHP);
+        ExitGames.Client.Photon.Hashtable table = myView.Owner.CustomProperties;
+        byte num = (byte)table["playerNum"];
+        Debug.Log(" 플레이어 캐릭터 Init "+myView.Owner.NickName + (byte)table["playerNum"]);
+        switch (num)
+        {
+            case 0:
+                CharMeshRenderer.material = Resources.Load("footmanHPBlue", typeof(Material)) as Material;
+                break;
+            case 1:
+                CharMeshRenderer.material = Resources.Load("footmanHPGreen", typeof(Material)) as Material;
+                break;
+            case 2:
+                CharMeshRenderer.material = Resources.Load("footmanHPRed", typeof(Material)) as Material;
+                break;
+            case 3:
+                CharMeshRenderer.material = Resources.Load("footmanHPYellow", typeof(Material)) as Material;
+                break;
+        }
     }
 
     void Start()
@@ -59,11 +77,13 @@ public class CharCtrl : MonoBehaviourPun
             return;
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
+        float x = Input.GetAxis("Mouse X");
         myAni.SetFloat("ForwardSpeed" , v);
         myAni.SetFloat("RightSpeed", h);
         Vector3 moveDirection = transform.TransformDirection(new Vector3(h, 0, v));
         moveDirection *= 10f;
         myCharCtrl.Move(moveDirection * Time.deltaTime);
+        transform.Rotate(transform.up, x);
         if (Input.GetMouseButtonDown(0))
         {
             //트리거
@@ -122,7 +142,8 @@ public class CharCtrl : MonoBehaviourPun
     {
         if (!isAlive)
             return;
-        nameTagTransform.position = transform.position + new Vector3(0, 8f, 0);
+        nameTagTransform.position = transform.position + new Vector3(0, 5f, 0);
+        nameTagTransform.rotation = transform.rotation;
     }
 
     private void OnDestroy()

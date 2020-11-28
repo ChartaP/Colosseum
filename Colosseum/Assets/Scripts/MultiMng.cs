@@ -29,7 +29,24 @@ public class MultiMng : MonoBehaviourPunCallbacks
     private string gameVersion = "1";
     #endregion
 
-    public byte PlayerNum = 0;
+    public byte playerNum = 0;
+
+    public byte PlayerNum
+    {
+        set
+        {
+            if (playerNum == value)
+                return;
+            ExitGames.Client.Photon.Hashtable table = PhotonNetwork.LocalPlayer.CustomProperties;
+            table["playerNum"] = value;
+            PhotonNetwork.SetPlayerCustomProperties(table);
+            playerNum = value;
+        }
+        get
+        {
+            return playerNum;
+        }
+    }
 
     public static bool isConnected
     {
@@ -74,10 +91,7 @@ public class MultiMng : MonoBehaviourPunCallbacks
 
             PhotonNetwork.NickName = defaultName;
 
-            ExitGames.Client.Photon.Hashtable table = PhotonNetwork.LocalPlayer.CustomProperties;
-            table["isReady"] = false;
-            table["isKicked"] = false;
-            PhotonNetwork.SetPlayerCustomProperties(table);
+            resetPlayerCustomProperties();
 
             if (PhotonNetwork.IsConnected)
             {
@@ -183,10 +197,17 @@ public class MultiMng : MonoBehaviourPunCallbacks
 
     public override void OnLeftRoom()
     {
+        resetPlayerCustomProperties();
+        PhotonNetwork.LoadLevel(0);
+    }
+
+    public void resetPlayerCustomProperties()
+    {
         ExitGames.Client.Photon.Hashtable table = PhotonNetwork.LocalPlayer.CustomProperties;
         table["isReady"] = false;
+        table["isKicked"] = false;
+        table["playerNum"] = (byte)0;
         PhotonNetwork.SetPlayerCustomProperties(table);
-        PhotonNetwork.LoadLevel(0);
     }
 
     public void IntoColosseum()
