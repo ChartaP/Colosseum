@@ -71,6 +71,8 @@ public class ReadyBtn : MonoBehaviour
 
     public bool isAllRaedy()
     {
+        if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
+            return false;
         foreach (Player player in PhotonNetwork.PlayerListOthers)
         {
             ExitGames.Client.Photon.Hashtable table = player.CustomProperties;

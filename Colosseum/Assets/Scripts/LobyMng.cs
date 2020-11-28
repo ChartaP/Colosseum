@@ -13,6 +13,8 @@ public class LobyMng : MonoBehaviourPunCallbacks
     [SerializeField]
     private GameObject[] playerObjectArr = new GameObject[4];
     [SerializeField]
+    private Animator[] AniArr = new Animator[4];
+    [SerializeField]
     private ReadyBtn readyBtn = null;
 
     private void Awake()
@@ -55,6 +57,12 @@ public class LobyMng : MonoBehaviourPunCallbacks
                 {
                     MultiMng.instance.PlayerNum = (byte)i;
                 }
+                ExitGames.Client.Photon.Hashtable table = player.CustomProperties;
+                if (player == PhotonNetwork.MasterClient)
+                    nameTagArr[i].SetMaster();
+                else
+                    nameTagArr[i].SetReady((bool)table["isReady"]);
+                AniArr[i].SetBool("Ready", (bool)table["isReady"]);
             }
             catch
             {
@@ -80,12 +88,6 @@ public class LobyMng : MonoBehaviourPunCallbacks
             nameTagArr[i].SetVisible(false);
             playerObjectArr[i].SetActive(false);
         }
-    }
-
-
-    public void ReadyBtnEvent()
-    {
-
     }
 
     public void GameStart()

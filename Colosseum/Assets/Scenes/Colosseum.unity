@@ -5954,6 +5954,7 @@ MonoBehaviour:
     type: 3}
   worldCanvas: {fileID: 247054919}
   nRoomSize: 1
+  nStartRoomsize: 0
   resultPanel: {fileID: 64856403}
 --- !u!4 &1441193990
 Transform:
@@ -8203,6 +8204,7 @@ GameObject:
   - component: {fileID: 1958623800}
   - component: {fileID: 1958623802}
   - component: {fileID: 1958623801}
+  - component: {fileID: 1958623803}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -8350,6 +8352,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1958623799}
   m_CullTransparentMesh: 0
+--- !u!114 &1958623803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1958623799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5204fd0d0ed8fb468d49034ed570b8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: {fileID: 1958623801}
 --- !u!1 &1964328236
 GameObject:
   m_ObjectHideFlags: 0

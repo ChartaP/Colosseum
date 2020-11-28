@@ -13,10 +13,14 @@ public class GameMng : MonoBehaviour
     private Transform worldCanvas = null;
     [SerializeField]
     private int nRoomSize = 0;
+    [SerializeField]
+    private int nStartRoomsize = 0;
 
     public ResultPanel resultPanel;
 
     public int RoomSize { get { return nRoomSize; } }
+
+    public int StartRoomSize { get { return nStartRoomsize; } }
 
     public int CurRank
     {
@@ -47,7 +51,7 @@ public class GameMng : MonoBehaviour
     void Start()
     {
         nRoomSize = PhotonNetwork.CurrentRoom.PlayerCount;
-
+        nStartRoomsize = nRoomSize;
         ExitGames.Client.Photon.Hashtable table = PhotonNetwork.LocalPlayer.CustomProperties;
         byte num = (byte)table["playerNum"];
         Vector3 StartPoint = new Vector3(0,0,0);

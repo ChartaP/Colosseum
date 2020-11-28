@@ -6,17 +6,6 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.SceneManagement;
 
-public class Room
-{
-    private readonly byte maxPlayersPerRoom = 4;
-    private byte curPlayersPerRoom = 4;
-
-    public Room(byte curPlayersPerRoom)
-    {
-        this.curPlayersPerRoom = curPlayersPerRoom;
-    }
-}
-
 public class MultiMng : MonoBehaviourPunCallbacks
 {
     public static MultiMng instance;
@@ -213,6 +202,10 @@ public class MultiMng : MonoBehaviourPunCallbacks
 
     public void IntoColosseum()
     {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.CurrentRoom.IsOpen = false;
+        }
         PhotonNetwork.LoadLevel(2);
     }
 
