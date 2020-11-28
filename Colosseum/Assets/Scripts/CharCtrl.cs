@@ -45,6 +45,8 @@ public class CharCtrl : MonoBehaviourPun
         myAni.SetFloat("HP", fHP);
         ExitGames.Client.Photon.Hashtable table = myView.Owner.CustomProperties;
         byte num = (byte)table["playerNum"];
+        table["isAlive"] = true;
+        myView.Owner.SetCustomProperties(table);
         Debug.Log(" 플레이어 캐릭터 Init "+myView.Owner.NickName + (byte)table["playerNum"]);
         switch (num)
         {
@@ -135,6 +137,17 @@ public class CharCtrl : MonoBehaviourPun
     private void Die()
     {
         isAlive = false;
+        ExitGames.Client.Photon.Hashtable table = myView.Owner.CustomProperties;
+        table["isAlive"] = false;
+        myView.Owner.SetCustomProperties(table);
+
+        if(myView.Owner == PhotonNetwork.LocalPlayer)
+            GameMng.instance.Retire();
+        else
+        {
+            GameMng.instance.Win();
+        }
+
         myAni.SetTrigger("Die");
     }
 

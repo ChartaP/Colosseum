@@ -207,6 +207,7 @@ public class MultiMng : MonoBehaviourPunCallbacks
         table["isReady"] = false;
         table["isKicked"] = false;
         table["playerNum"] = (byte)0;
+        table["isAlive"] = true;
         PhotonNetwork.SetPlayerCustomProperties(table);
     }
 
