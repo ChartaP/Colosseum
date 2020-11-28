@@ -12,6 +12,8 @@ public class LobyMng : MonoBehaviourPunCallbacks
     private NameTag[] nameTagArr = new NameTag[4];
     [SerializeField]
     private GameObject[] playerObjectArr = new GameObject[4];
+    [SerializeField]
+    private ReadyBtn readyBtn = null;
 
     private void Awake()
     {
@@ -47,9 +49,12 @@ public class LobyMng : MonoBehaviourPunCallbacks
             {
                 Debug.Log(PhotonNetwork.NickName);
                 Debug.Log(i+"번 플레이어 "+ player.NickName +" 세팅");
-                nameTagArr[i].SetVisible(true);
+                SetPlayerVisible(true, i);
                 nameTagArr[i].SetText(player.NickName);
-                playerObjectArr[i].SetActive(true);
+                if(player == PhotonNetwork.LocalPlayer)
+                {
+                    MultiMng.instance.PlayerNum = (byte)i;
+                }
             }
             catch
             {
@@ -59,12 +64,34 @@ public class LobyMng : MonoBehaviourPunCallbacks
         }
         for (; i < 4; i++)
         {
+            SetPlayerVisible(false, i);
+        }
+    }
+
+    private void SetPlayerVisible(bool s,int i)
+    {
+        if (s)
+        {
+            nameTagArr[i].SetVisible(true);
+            playerObjectArr[i].SetActive(true);
+        }
+        else
+        {
             nameTagArr[i].SetVisible(false);
             playerObjectArr[i].SetActive(false);
         }
     }
 
-    
+
+    public void ReadyBtnEvent()
+    {
+
+    }
+
+    public void GameStart()
+    {
+        MultiMng.instance.IntoColosseum();
+    }
 
     public void OnDestroy()
     {

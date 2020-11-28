@@ -26,8 +26,10 @@ public class MultiMng : MonoBehaviourPunCallbacks
     private readonly string defaultName = "Player";
     [Tooltip("wow")]
     [SerializeField]
-    private static string gameVersion = "1";
+    private string gameVersion = "1";
     #endregion
+
+    public byte PlayerNum = 0;
 
     public static bool isConnected
     {
@@ -71,6 +73,11 @@ public class MultiMng : MonoBehaviourPunCallbacks
             PhotonNetwork.AutomaticallySyncScene = true;
 
             PhotonNetwork.NickName = defaultName;
+
+            ExitGames.Client.Photon.Hashtable table = PhotonNetwork.LocalPlayer.CustomProperties;
+            table["isReady"] = false;
+            table["isKicked"] = false;
+            PhotonNetwork.SetPlayerCustomProperties(table);
 
             if (PhotonNetwork.IsConnected)
             {
@@ -171,12 +178,20 @@ public class MultiMng : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         Debug.Log("방에 접속됨");
-        //GameObject inst = PhotonNetwork.Instantiate(playerCharacter.name, new Vector3(0f, 0f, 0f), Quaternion.identity, 0);
+        //
     }
 
     public override void OnLeftRoom()
     {
+        ExitGames.Client.Photon.Hashtable table = PhotonNetwork.LocalPlayer.CustomProperties;
+        table["isReady"] = false;
+        PhotonNetwork.SetPlayerCustomProperties(table);
         PhotonNetwork.LoadLevel(0);
+    }
+
+    public void IntoColosseum()
+    {
+        PhotonNetwork.LoadLevel(2);
     }
 
     public void LeaveRoom()
