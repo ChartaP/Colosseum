@@ -169,4 +169,5 @@ public class CharCtrl : MonoBehaviourPun
             Destroy(nameTagTransform.gameObject);
         }
     }
+
 }
