@@ -1473,13 +1473,13 @@ MonoBehaviour:
     SynchronizeType: 2
     Name: HP
   m_SynchronizeLayers:
-  - SynchronizeType: 0
+  - SynchronizeType: 2
     LayerIndex: 0
-  - SynchronizeType: 1
+  - SynchronizeType: 2
     LayerIndex: 1
-  - SynchronizeType: 1
+  - SynchronizeType: 2
     LayerIndex: 2
-  - SynchronizeType: 1
+  - SynchronizeType: 2
     LayerIndex: 3
 --- !u!114 &858853525099967091
 MonoBehaviour:

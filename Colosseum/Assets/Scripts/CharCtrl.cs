@@ -104,33 +104,41 @@ public class CharCtrl : MonoBehaviourPun
         moveDirection *= 10f;
         myCharCtrl.Move(moveDirection * Time.deltaTime);
         transform.Rotate(transform.up, x);
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(1))
         {
             //트리거
             myAni.SetTrigger("Attack");
         }
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(0))
         {
             //트리거
             myAni.SetTrigger("Defend");
         }
     }
 
+    public void RPCFunc(string name)
+    {
+        if (!PhotonNetwork.IsMasterClient)
+            return;
+        myView.RPC(name, RpcTarget.AllBuffered);
+    }
+
+    [PunRPC]
     public void AttackStart()
     {
         atk.AtkStart();
     }
-
+    [PunRPC]
     public void AttackEnd()
     {
         atk.AtkEnd();
     }
-
+    [PunRPC]
     public void DefendStart()
     {
         isDefend = true;
     }
-
+    [PunRPC]
     public void DefendEnd()
     {
         isDefend = false;
@@ -138,9 +146,13 @@ public class CharCtrl : MonoBehaviourPun
 
     public void Hit(float fDamage)
     {
+        if (!PhotonNetwork.IsMasterClient)
+            return;
+        myView.RPC("GetDamage",RpcTarget.OthersBuffered,fDamage);
         GetDamage(fDamage);
     }
 
+    [PunRPC]
     private void GetDamage(float fDamage)
     {
         if (isDefend)
@@ -157,9 +169,15 @@ public class CharCtrl : MonoBehaviourPun
         fHP -= fDamage;
         myAni.SetFloat("HP", fHP);
         if (fHP <= 0)
+        {
+            if (!PhotonNetwork.IsMasterClient)
+                return;
+            myView.RPC("Die", RpcTarget.OthersBuffered);
             Die();
+        }
     }
 
+    [PunRPC]
     private void Die()
     {
         isAlive = false;

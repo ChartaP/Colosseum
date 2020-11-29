@@ -32,6 +32,8 @@ public class LobyMng : MonoBehaviourPunCallbacks
             nameTagArr[i].SetVisible(false);
             playerObjectArr[i].SetActive(false);
         }
+        MultiMng.instance.JoinLoby();
+
         MultiMng.instance.JoinRoom();
     }
 

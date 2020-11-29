@@ -9,21 +9,21 @@ public class AniEventHandler : MonoBehaviour
     
     public void AttackStartEventListener()
     {
-        ownChar.AttackStart();
+        ownChar.RPCFunc("AttackStart");
     }
 
     public void AttackEndEventListener()
     {
-        ownChar.AttackEnd();
+        ownChar.RPCFunc("AttackEnd");
     }
 
     public void DefendStartEventListener()
     {
-        ownChar.DefendStart();
+        ownChar.RPCFunc("DefendStart");
     }
 
     public void DefendEndEventListener()
     {
-        ownChar.DefendEnd();
+        ownChar.RPCFunc("DefendEnd");
     }
 }

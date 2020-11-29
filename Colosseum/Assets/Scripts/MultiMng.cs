@@ -91,6 +91,10 @@ public class MultiMng : MonoBehaviourPunCallbacks
                 PhotonNetwork.ConnectUsingSettings();
             }
         }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
     void Start()
     {
@@ -128,6 +132,10 @@ public class MultiMng : MonoBehaviourPunCallbacks
         PhotonNetwork.LeaveRoom();
         Destroy(gameObject);
     }
+    public void JoinLoby()
+    {
+        PhotonNetwork.JoinLobby();
+    }
 
     public void JoinRoom()
     {
@@ -137,10 +145,14 @@ public class MultiMng : MonoBehaviourPunCallbacks
     private IEnumerator JoinRoomTry()
     {
 
-        while (true)
+        while (!PhotonNetwork.InRoom)
         {
-
-            yield return new WaitForSecondsRealtime(1f);
+            if (!PhotonNetwork.InLobby)
+            {
+                PhotonNetwork.JoinLobby();
+                yield return new WaitForSecondsRealtime(1f);
+                continue;
+            }
             if (PhotonNetwork.IsConnectedAndReady)
             {
                 JoinRandomRoom();
@@ -149,10 +161,7 @@ public class MultiMng : MonoBehaviourPunCallbacks
             {
                 PhotonNetwork.ConnectUsingSettings();
             }
-            if (PhotonNetwork.InRoom)
-            {
-                break;
-            }
+            yield return new WaitForSecondsRealtime(1f);
         }
         yield break;
     }
