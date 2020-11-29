@@ -20,3 +20,6 @@
  
 	다른 플레이어의 캐릭터를 공격하면 HP가 떨어지고 HP가 0이된 플레이어는 탈락
 	마지막 남은 플레이어가 게임의 승자
+### 다운로드
+
+ * [다운로드 링크](https://github.com/ChartaP/Colosseum/blob/main/Build/ColosseumFinal.zip)
