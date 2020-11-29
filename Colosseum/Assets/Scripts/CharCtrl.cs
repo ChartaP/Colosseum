@@ -13,6 +13,8 @@ public class CharCtrl : MonoBehaviourPun
     private Animator myAni = null;
     [SerializeField]
     private PhotonView myView = null;
+    [SerializeField]
+    private AudioCtrl myAudio = null;
 
     [SerializeField]
     private Transform nameTagTransform = null;
@@ -34,6 +36,11 @@ public class CharCtrl : MonoBehaviourPun
 
     [SerializeField]
     private SkinnedMeshRenderer CharMeshRenderer;
+
+    [SerializeField]
+    private GameObject bloodEffect;
+    [SerializeField]
+    private GameObject hitEffect;
 
     public float HP { get { return fHP; } }
 
@@ -76,6 +83,14 @@ public class CharCtrl : MonoBehaviourPun
     // Update is called once per frame
     void Update()
     {
+        if (Application.isEditor)
+        {
+            //테스트 용 코드
+            if (Input.GetKeyDown(KeyCode.Alpha9))
+            {
+                Hit(10);
+            }
+        }
         if (!isAlive)
             return;
         if (myView.Owner != PhotonNetwork.LocalPlayer)
@@ -123,14 +138,22 @@ public class CharCtrl : MonoBehaviourPun
 
     public void Hit(float fDamage)
     {
-        myAni.SetTrigger("Hit");
         GetDamage(fDamage);
     }
 
     private void GetDamage(float fDamage)
     {
         if (isDefend)
+        {
+            myAudio.Deffence();
+            Instantiate(hitEffect, transform.position, Quaternion.identity, transform);
             return;
+        }
+        else
+        {
+            myAni.SetTrigger("Hit");
+            Instantiate(bloodEffect, transform.position + Vector3.up*2, Quaternion.Euler(-90,0,0), transform);
+        }
         fHP -= fDamage;
         myAni.SetFloat("HP", fHP);
         if (fHP <= 0)

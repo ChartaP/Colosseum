@@ -13,6 +13,9 @@ public class AudioCtrl : MonoBehaviour
     [SerializeField]
     private AudioClip screamClip;
 
+    [SerializeField]
+    private AudioClip[] deffenceClips;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +26,11 @@ public class AudioCtrl : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void Deffence()
+    {
+        AudioSource.PlayClipAtPoint(deffenceClips[Random.Range(0, deffenceClips.Length)], transform.position);
     }
 
     public void Die()

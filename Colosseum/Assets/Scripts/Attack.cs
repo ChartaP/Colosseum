@@ -6,6 +6,8 @@ public class Attack : MonoBehaviour
 {
     [SerializeField]
     private List<GameObject> hitList = new List<GameObject>();
+    [SerializeField]
+    private TrailRenderer swordTrail;
 
     [SerializeField]
     private GameObject ownGameobject = null;
@@ -23,11 +25,13 @@ public class Attack : MonoBehaviour
 
     public void AtkStart()
     {
+        swordTrail.enabled = true;
         GetComponent<BoxCollider>().enabled = true;
     }
 
     public void AtkEnd()
     {
+        swordTrail.enabled = false;
         GetComponent<BoxCollider>().enabled = false;
         hitList.Clear();
     }
