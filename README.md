@@ -1,5 +1,6 @@
 # Colosseum
 ## 콜로세움
+[![Video Label](https://img.youtube.com/vi/DDfa04HPyZ8/0.jpg)](https://youtu.be/DDfa04HPyZ8)
 ### 소개
 	4명의 검투사가 모여 단한명의 승자를 가리는 배틀로얄 게임
 	Unity3D 엔진을 이용해 제작되었고 Photon PUN api를 기반으로 멀티플레이 환경을 구축하였습니다
