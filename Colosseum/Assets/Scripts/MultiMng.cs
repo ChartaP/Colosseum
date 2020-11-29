@@ -108,7 +108,7 @@ public class MultiMng : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsConnected)
         {
             Debug.Log("로비 입장");
-            PhotonNetwork.LoadLevel(1);
+            LoadLevelWithFade(1);
         }
     }
 
@@ -121,7 +121,7 @@ public class MultiMng : MonoBehaviourPunCallbacks
     {
         Debug.LogWarningFormat("연결이 끊어짐 이유 : {0}", cause);
         if(SceneManager.GetActiveScene().buildIndex!=0)
-            PhotonNetwork.LoadLevel(0);
+            LoadLevelWithFade(0);
     }
     public void OnApplicationQuit()
     {
@@ -154,7 +154,7 @@ public class MultiMng : MonoBehaviourPunCallbacks
                 break;
             }
         }
-        yield return null;
+        yield break;
     }
 
     public void JoinRandomRoom()
@@ -187,7 +187,7 @@ public class MultiMng : MonoBehaviourPunCallbacks
     public override void OnLeftRoom()
     {
         resetPlayerCustomProperties();
-        PhotonNetwork.LoadLevel(0);
+        LoadLevelWithFade(0);
     }
 
     public void resetPlayerCustomProperties()
@@ -206,7 +206,20 @@ public class MultiMng : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.CurrentRoom.IsOpen = false;
         }
-        PhotonNetwork.LoadLevel(2);
+        LoadLevelWithFade(2);
+    }
+
+    public void LoadLevelWithFade(int num)
+    {
+        Debug.Log("페이드 동반 로드 씬");
+        GameObject obj = Instantiate(Resources.Load("fadeCanvas", typeof(GameObject)) as GameObject, Vector3.zero,Quaternion.identity);
+        obj.GetComponent<FadeInOut>().LoadScene(num);
+    }
+
+    public void LoadLevel(int num)
+    {
+        Debug.Log("로드 씬");
+        PhotonNetwork.LoadLevel(num);
     }
 
     public void LeaveRoom()
