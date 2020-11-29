@@ -13,7 +13,7 @@ public class Attack : MonoBehaviour
     private GameObject ownGameobject = null;
 
     [SerializeField]
-    private float fDamage = 50f;
+    private float fDamage = 20f;
 
     private void Start()
     {

@@ -1179,7 +1179,7 @@ MonoBehaviour:
   hitList: []
   swordTrail: {fileID: 9046637601704439052}
   ownGameobject: {fileID: 5641661054129134646}
-  fDamage: 50
+  fDamage: 20
 --- !u!1 &6726982380001204997
 GameObject:
   m_ObjectHideFlags: 0

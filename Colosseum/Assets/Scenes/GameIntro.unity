@@ -483,6 +483,7 @@ GameObject:
   - component: {fileID: 265418086}
   - component: {fileID: 265418085}
   - component: {fileID: 265418089}
+  - component: {fileID: 265418088}
   m_Layer: 5
   m_Name: GameConnectBtn
   m_TagString: Untagged
@@ -553,8 +554,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 20184478}
-        m_MethodName: ConnectLoby
+      - m_Target: {fileID: 265418089}
+        m_MethodName: OnClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -564,7 +565,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 265418089}
+      - m_Target: {fileID: 265418088}
         m_MethodName: OnClick
         m_Mode: 1
         m_Arguments:
@@ -612,6 +613,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 265418083}
   m_CullTransparentMesh: 0
+--- !u!114 &265418088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 265418083}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca6c08c2a87d9f448b3e381429d42be3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &265418089
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -233,6 +233,7 @@ public class MultiMng : MonoBehaviourPunCallbacks
 
     public void LeaveRoom()
     {
+        resetPlayerCustomProperties();
         PhotonNetwork.LeaveRoom();
     }
 
